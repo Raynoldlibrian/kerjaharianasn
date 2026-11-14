@@ -16,7 +16,7 @@ self.addEventListener('install',e=>{
 self.addEventListener('activate',e=>{
   e.waitUntil((async()=>{
     const ks=await caches.keys();
-    await Promise.all(ks.filter(k=>k.startsWith('jejakkerja-')&&k!==VERSI).map(k=>caches.delete(k)));
+    await Promise.all(ks.filter(k=>k.startsWith('kerjaharian-')&&k!==VERSI).map(k=>caches.delete(k)));
     await self.clients.claim();
   })());
 });
