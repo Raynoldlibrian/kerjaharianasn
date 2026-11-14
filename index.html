@@ -1083,7 +1083,7 @@ function renderHome(){
   var now=new Date(),nowM=now.getHours()*60+now.getMinutes(),defEnd=Math.min(1439,Math.max(toMin(last)+30,Math.ceil(nowM/5)*5));
   if(defEnd<=toMin(last))defEnd=Math.min(1439,toMin(last)+60);
   h+='<div class="two"><section class="section"><h2>Jalur hari ini <button class="btn sm" type="button" data-go="kinerja">Buka kinerja harian</button></h2>'
-   +'<form class="card quick" id="quick" autocomplete="off"><div class="field"><label class="sr" for="q-u">Kegiatan</label><input type="text" id="q-u" placeholder="Apa yang baru saja kamu kerjakan?" required></div>'
+   +'<form class="card quick" id="quick" autocomplete="off"><div class="field"><label class="sr" for="q-u">Kegiatan</label><input type="text" id="q-u" enterkeyhint="send" placeholder="Apa yang baru saja kamu kerjakan?" required></div>'
    +'<div class="qrow"><div class="field"><label class="sr" for="q-m">Mulai</label><input type="time" id="q-m" value="'+last+'" required></div>'
    +'<div class="field"><label class="sr" for="q-s">Selesai</label><input type="time" id="q-s" value="'+fromMin(defEnd)+'" required></div>'
    +'<button class="btn primary" type="submit">'+ic('plus')+'Catat</button></div></form>'
@@ -1902,15 +1902,16 @@ function wire(){
   document.addEventListener('focusin',function(e){if(e.target.id==='q-u'){document.documentElement.classList.add('typing');maStartWriting();mirrorQ();keepHero()}});
   document.addEventListener('focusout',function(e){
     if(e.target.id!=='q-u')return;
-    document.documentElement.classList.remove('typing');
     var empty=!e.target.value.trim();
     setTimeout(function(){
+      if(maTyping())return;
+      document.documentElement.classList.remove('typing');
       if(!MA.hold){
         if(empty){var pl=mascotPool();say(pl[ui.mi%pl.length])}
         if(MA.state==='mencatat'||MA.state==='mencatat_prep'){MA.cut=true;maSet('mencatat_selesai',1500);MA.cut=false}
         else maRest();
       }
-    },60);
+    },150);
   });
   document.addEventListener('input',function(e){
     var t=e.target;
@@ -1947,7 +1948,8 @@ function wire(){
     }
   });
   document.addEventListener('keydown',function(e){
-    if(e.key==='Enter'&&e.target.id==='w-newsub'){e.preventDefault();acts.addSub()}
+    if(e.key==='Enter'&&e.target.id==='q-u'){e.preventDefault();var f=$('#quick');if(f){if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}))}}
+    else if(e.key==='Enter'&&e.target.id==='w-newsub'){e.preventDefault();acts.addSub()}
   });
   window.addEventListener('hashchange',route);
 }
