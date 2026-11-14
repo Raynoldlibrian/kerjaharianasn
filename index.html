@@ -188,11 +188,11 @@ h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:
 @media (min-width:700px){.mascot.anim{height:308px}}
 @media (max-width:699px){
   html.typing .top,html.typing .tabbar,html.typing .tiles,html.typing .banner,html.typing .section>h2{display:none}
-  html.typing .hero{min-height:152px;padding:14px 116px 14px 16px;align-content:start;margin-top:6px}
+  html.typing .hero{min-height:166px;padding:14px 116px 14px 16px;align-content:start;margin-top:6px}
   html.typing .hero .eyebrow,html.typing .hero .ring{display:none}
   html.typing .hero h1{font-size:20px;margin:0}
   html.typing .hero .bubble{margin-top:6px;padding:8px 10px;font-size:13px}
-  html.typing .hero .mascot.anim{height:156px}
+  html.typing .hero .mascot.anim{height:148px}
   html.typing .section{margin-top:10px}
 }
 @keyframes idle{0%,100%{transform:translateY(0) scale(1,1) rotate(0)}25%{transform:translateY(-3px) scale(.995,1.012) rotate(.7deg)}50%{transform:translateY(-5px) scale(.99,1.025) rotate(0)}75%{transform:translateY(-3px) scale(.995,1.012) rotate(-.7deg)}}
@@ -1943,7 +1943,7 @@ function wire(){
     if(e.target.id==='quick'){
       var u=$('#q-u').value.trim(),m=$('#q-m').value,s=$('#q-s').value;
       if(!u)return;if(toMin(s)<=toMin(m)){toast('Jam selesai harus setelah jam mulai');return}
-      db.logs.push({id:uid(),tgl:today(),mulai:m,selesai:s,uraian:u,workId:'',output:'',satuan:'',bukti:''});save();render(true);toast('Tercatat di jalur hari ini');say('Tercatat. Terus semangat!');setTimeout(cekTarget,400);mascotAct('hop');maSet('jempol_ok',2400);
+      db.logs.push({id:uid(),tgl:today(),mulai:m,selesai:s,uraian:u,workId:'',output:'',satuan:'',bukti:''});save();mascotAct('cheer');render(true);toast('Tercatat di jalur hari ini');say('Tercatat. Terus semangat!');setTimeout(cekTarget,400);
     }
   });
   document.addEventListener('keydown',function(e){
